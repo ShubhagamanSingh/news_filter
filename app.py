@@ -25,7 +25,7 @@ st.markdown("""
         padding: 3rem 2rem;
         border-radius: 0 0 25px 25px;
         margin-bottom: 2rem;
-        margin-top: -2rem;
+        margin-top: -4rem;
         color: white;
         text-align: center;
     }
@@ -589,3 +589,4 @@ if st.session_state.logged_in:
 
     with tab2:
         display_modern_history()
+
