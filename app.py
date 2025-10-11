@@ -13,6 +13,144 @@ st.set_page_config(
     layout="wide"
 )
 
+# --- Custom CSS for Modern UI ---
+st.markdown("""
+<style>
+    .main {
+        background-color: black;
+    }
+    
+    .header-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 3rem 2rem;
+        border-radius: 0 0 25px 25px;
+        margin-bottom: 2rem;
+        margin-top: -2rem;
+        color: white;
+        text-align: center;
+    }
+    
+    .custom-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .custom-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    
+    .feature-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 15px;
+        text-align: center;
+        margin: 0.5rem;
+    }
+    
+    .credibility-score {
+        background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 15px;
+        text-align: center;
+        margin: 1rem 0;
+    }
+    
+    .warning-score {
+        background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 15px;
+        text-align: center;
+        margin: 1rem 0;
+    }
+    
+    .danger-score {
+        background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 15px;
+        text-align: center;
+        margin: 1rem 0;
+    }
+    
+    .stButton button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+    
+    .stButton button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+    
+    .stTextInput input, .stTextArea textarea {
+        border-radius: 15px;
+        border: 2px solid #e0e0e0;
+        padding: 1rem;
+        font-size: 1rem;
+    }
+    
+    .stTextInput input:focus, .stTextArea textarea:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    
+    .analysis-section {
+        border-left: 4px solid #667eea;
+        padding-left: 1.5rem;
+        margin: 1.5rem 0;
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 10px;
+    }
+    
+    .verdict-badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: bold;
+        margin: 0.5rem 0;
+    }
+    
+    .reliable {
+        background: #4CAF50;
+        color: white;
+    }
+    
+    .misleading {
+        background: #ff9800;
+        color: white;
+    }
+    
+    .false {
+        background: #f44336;
+        color: white;
+    }
+    
+    .opinion {
+        background: #9c27b0;
+        color: white;
+    }
+ 
+</style>
+""", unsafe_allow_html=True)
+
+
 # --- User Authentication and Data Management ---
 # --- MongoDB Connection ---
 @st.cache_resource
@@ -130,121 +268,324 @@ def get_article_text(url):
     except Exception as e:
         return None, f"An error occurred while parsing the article: {e}"
 
-def display_history():
-    """Renders the user's interaction history."""
-    st.header("Your Analysis History")
+def display_modern_header():
+    """Display modern header with gradient"""
+    st.markdown("""
+    <div class="header-container">
+        <h1 style="margin:0; font-size: 3rem; font-weight: 700;">📰 AI Fact Checker</h1>
+        <p style="margin:0; font-size: 1.3rem; opacity: 0.9; margin-top: 0.5rem;">
+        Detect misinformation and verify news credibility with AI-powered analysis
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+def display_features():
+    """Display feature cards"""
+    st.markdown("### 🔍 What We Analyze")
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("""
+        <div class="feature-card">
+            <h3>🎯 Credibility Score</h3>
+            <p>1-10 reliability rating</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div class="feature-card">
+            <h3>🔎 Bias Detection</h3>
+            <p>Identify political & emotional bias</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+        <div class="feature-card">
+            <h3>📊 Fact Checking</h3>
+            <p>Verify claims & sources</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+def display_modern_auth():
+    """Display modern authentication in sidebar"""
+    with st.sidebar:
+        st.markdown("""
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h2 style="color: #667eea; margin: 0;">Fact Checker</h2>
+            <p style="color: #666; margin: 0;">AI News Analysis</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if not st.session_state.logged_in:
+            tab1, tab2 = st.tabs(["🔐 Login", "📝 Register"])
+            
+            with tab1:
+                username = st.text_input("Username", key="login_user")
+                password = st.text_input("Password", type="password", key="login_pass")
+                
+                if st.button("Login", use_container_width=True):
+                    if username and password:
+                        user_data = users_collection.find_one({"_id": username})
+                        if user_data and verify_password(user_data["password"], password):
+                            st.session_state.logged_in = True
+                            st.session_state.username = username
+                            st.rerun()
+                        else:
+                            st.error("Invalid username or password")
+                    else:
+                        st.warning("Please enter username and password")
+            
+            with tab2:
+                username = st.text_input("Username", key="reg_user")
+                password = st.text_input("Password", type="password", key="reg_pass")
+                confirm_password = st.text_input("Confirm Password", type="password", key="reg_confirm")
+                
+                if st.button("Register", use_container_width=True):
+                    if username and password:
+                        if password == confirm_password:
+                            if users_collection.find_one({"_id": username}):
+                                st.error("Username already exists")
+                            else:
+                                users_collection.insert_one({
+                                    "_id": username,
+                                    "password": hash_password(password),
+                                    "history": []
+                                })
+                                st.success("Registration successful! Please login.")
+                        else:
+                            st.error("Passwords do not match")
+                    else:
+                        st.warning("Please fill all fields")
+        else:
+            st.markdown(f"""
+            <div class="custom-card">
+                <h4 style="color: #667eea; margin: 0;">Welcome back!</h4>
+                <p style="margin: 0.5rem 0; color: #666;">{st.session_state.username}</p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            if st.button("Logout", use_container_width=True):
+                st.session_state.logged_in = False
+                st.session_state.username = ""
+                st.rerun()
+
+def display_analysis_form():
+    """Display the modern analysis form"""
+    st.markdown("""
+    <div class="custom-card">
+        <h2 style="color: #333; margin-bottom: 1.5rem; text-align: center;">🔍 Analyze News Article</h2>
+    """, unsafe_allow_html=True)
+    
+    input_method = st.radio(
+        "Choose input method:",
+        ["🔗 URL", "📝 Paste Text"],
+        horizontal=True,
+        label_visibility="collapsed"
+    )
+
+    article_text = ""
+    source_identifier = ""
+
+    if input_method == "🔗 URL":
+        url = st.text_input(
+            "**Enter News Article URL**",
+            placeholder="https://example.com/news-article",
+            help="Paste the full URL of the news article you want to analyze"
+        )
+        if url:
+            with st.spinner("🌐 Fetching article content..."):
+                article_text, error = get_article_text(url)
+                if error:
+                    st.error(f"❌ {error}")
+                else:
+                    st.success("✅ Article content fetched successfully!")
+                    source_identifier = url
+    else:  # Paste Text
+        article_text = st.text_area(
+            "**Paste Article Text**",
+            height=250,
+            placeholder="Paste the full text of the news article here...",
+            help="Copy and paste the complete article text for analysis"
+        )
+        source_identifier = "Pasted Text"
+    
+    st.markdown("</div>", unsafe_allow_html=True)
+    return article_text, source_identifier
+
+def display_analysis_results(analysis, source_identifier):
+    """Display the analysis results in a modern layout"""
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white; padding: 2rem; border-radius: 20px; text-align: center; margin: 2rem 0;">
+        <h2 style="margin:0; color: white;">✅ Analysis Complete</h2>
+        <p style="margin:0.5rem 0 0 0; opacity: 0.9;">Your news article has been analyzed</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Extract score and verdict for special formatting
+    lines = analysis.split('\n')
+    credibility_score = None
+    verdict = None
+    
+    for i, line in enumerate(lines):
+        if "Credibility Score:" in line:
+            credibility_score = line.split(":")[1].strip()
+        if "Verdict:" in line:
+            verdict = line.split(":")[1].strip()
+    
+    # Display score and verdict prominently
+    if credibility_score and verdict:
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            try:
+                score_num = int(credibility_score.split('/')[0].strip())
+                if score_num >= 7:
+                    st.markdown(f"""
+                    <div class="credibility-score">
+                        <h3 style="margin:0; font-size: 2.5rem;">{credibility_score}</h3>
+                        <p style="margin:0; opacity: 0.9;">Credibility Score</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+                elif score_num >= 4:
+                    st.markdown(f"""
+                    <div class="warning-score">
+                        <h3 style="margin:0; font-size: 2.5rem;">{credibility_score}</h3>
+                        <p style="margin:0; opacity: 0.9;">Credibility Score</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+                else:
+                    st.markdown(f"""
+                    <div class="danger-score">
+                        <h3 style="margin:0; font-size: 2.5rem;">{credibility_score}</h3>
+                        <p style="margin:0; opacity: 0.9;">Credibility Score</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+            except:
+                pass
+        
+        with col2:
+            verdict_class = "reliable"
+            if "Misleading" in verdict:
+                verdict_class = "misleading"
+            elif "False" in verdict:
+                verdict_class = "false"
+            elif "Opinion" in verdict or "Satire" in verdict:
+                verdict_class = "opinion"
+                
+            st.markdown(f"""
+            <div style="text-align: center; padding: 1rem;">
+                <h3 style="margin:0; color: #333;">Verdict</h3>
+                <div class="verdict-badge {verdict_class}" style="font-size: 1.2rem;">
+                    {verdict}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+    
+    # Display full analysis
+    st.markdown("""
+    <div class="custom-card">
+        <h3 style="color: #333; margin-bottom: 1.5rem;">📊 Detailed Analysis</h3>
+    """, unsafe_allow_html=True)
+    st.markdown(analysis)
+    st.markdown("</div>", unsafe_allow_html=True)
+    
+    # Add copy button for the analysis
+    st.code(analysis, language="markdown")
+    
+    # Save to history
+    add_to_history(st.session_state.username, "News Analysis", source_identifier, analysis)
+
+def display_modern_history():
+    """Display modern history view"""
+    st.markdown("""
+    <div class="custom-card">
+        <h2 style="color: #333; text-align: center; margin-bottom: 2rem;">📚 Analysis History</h2>
+    """, unsafe_allow_html=True)
+    
     user_data = users_collection.find_one({"_id": st.session_state.username})
     user_history = user_data.get("history", []) if user_data else []
 
     if not user_history:
-        st.info("You have no saved analyses yet. Analyze an article to see your history here!")
+        st.markdown("""
+        <div style="text-align: center; padding: 3rem;">
+            <h3 style="color: #666;">No analyses yet</h3>
+            <p>Your news analyses will appear here!</p>
+            <div style="font-size: 4rem;">📰</div>
+        </div>
+        """, unsafe_allow_html=True)
     else:
-        for entry in user_history:
-            expander_title = f"{entry['type']} from {entry['date']}"
-            with st.expander(expander_title):
-                st.write(f"**Interaction Type:** {entry['type']}")
-                st.caption(f"**Source:** {entry['input']}")
-
-                st.markdown("---")
-                st.write("**AI Response:**")
-                st.markdown(entry["response"])
+        for i, entry in enumerate(user_history):
+            with st.expander(f"📅 {entry['type']} from {entry['date']}", expanded=(i==0)):
+                col1, col2 = st.columns([1, 3])
+                
+                with col1:
+                    st.markdown("**Source:**")
+                    st.info(entry['input'][:100] + '...' if len(entry['input']) > 100 else entry['input'])
+                
+                with col2:
+                    st.markdown("**Analysis:**")
+                    st.markdown(entry["response"])
+    
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # --- Main App Interface ---
-st.title("📰 Fake News Detector for Students")
-st.markdown("In an era of rapid information sharing, it's crucial to distinguish fact from fiction. This tool helps you analyze news articles for credibility, bias, and factual accuracy to combat misinformation.")
+display_modern_header()
 
-# --- Authentication UI ---
+# --- Authentication ---
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
     st.session_state.username = ""
 
+display_modern_auth()
+
 if not st.session_state.logged_in:
-    st.sidebar.title("Login / Register")
-    choice = st.sidebar.radio("Choose an action", ["Login", "Register"])
-
-    username = st.sidebar.text_input("Username")
-    password = st.sidebar.text_input("Password", type="password")
-
-    if choice == "Register":
-        if st.sidebar.button("Register"):
-            if username and password:
-                # Check if user already exists
-                if users_collection.find_one({"_id": username}):
-                    st.sidebar.error("Username already exists.")
-                else:
-                    users_collection.insert_one({
-                        "_id": username,
-                        "password": hash_password(password),
-                        "history": []
-                    })
-                    st.sidebar.success("Registration successful! Please log in.")
-            else:
-                st.sidebar.warning("Please enter a username and password.")
-
-    if choice == "Login":
-        if st.sidebar.button("Login"):
-            if username and password:
-                user_data = users_collection.find_one({"_id": username})
-                if user_data and verify_password(user_data["password"], password):
-                    st.session_state.logged_in = True
-                    st.session_state.username = username
-                    st.rerun() # Rerun the script to show the main app
-                else:
-                    st.sidebar.error("Invalid username or password.")
-            else:
-                st.sidebar.warning("Please enter your username and password.")
-
-    st.info("Please log in or register to use the Fake News Detector. Open the sidebar by clicking the top-left icon.", icon="👈")
+    # Welcome screen for non-logged in users
+    st.markdown("""
+    <div class="custom-card">
+        <h2 style="text-align: center; color: #333; margin-bottom: 2rem;">Welcome to AI Fact Checker! 🛡️</h2>
+        <p style="text-align: center; font-size: 1.2rem; color: #666; line-height: 1.6;">
+        In today's digital age, misinformation spreads rapidly. Our AI-powered tool helps you 
+        verify news credibility, detect bias, and identify fake news to make informed decisions.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    display_features()
+    
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); color: white; padding: 2rem; border-radius: 20px; text-align: center; margin: 2rem 0;">
+        <p style="margin: 0; font-size: 1.2rem;">
+        👈 <strong>Get Started:</strong> Please login or register in the sidebar to start analyzing news!
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # --- Main Application ---
 if st.session_state.logged_in:
-    st.sidebar.title(f"Welcome, {st.session_state.username}! 👋")
-    if st.sidebar.button("Logout"):
-        st.session_state.logged_in = False
-        st.session_state.username = ""
-        st.rerun()
-
     # --- Main Application Tabs ---
-    analyzer_tab, history_tab = st.tabs(["🔍 Analyze News", "📜 History"])
+    tab1, tab2 = st.tabs(["🔍 Analyze News", "📚 History"])
 
-    with analyzer_tab:
-        st.header("Analyze an Article")
-        input_method = st.radio("Choose input method:", ["URL", "Paste Text"], horizontal=True)
-
-        article_text = ""
-        source_identifier = ""
-
-        if input_method == "URL":
-            url = st.text_input("Enter the news article URL:", placeholder="https://example.com/news-article")
-            if url:
-                with st.spinner("Fetching article from URL..."):
-                    article_text, error = get_article_text(url)
-                    if error:
-                        st.error(error)
-                    else:
-                        st.success("Article content fetched successfully!")
-                        source_identifier = url
-        else: # Paste Text
-            article_text = st.text_area("Paste the article text here:", height=250)
-            source_identifier = "Pasted Text"
-
-        if st.button("🔬 Analyze Article", use_container_width=True, disabled=not article_text):
-            with st.spinner("AI is analyzing the article... This may take a moment. 🧠"):
+    with tab1:
+        display_features()
+        article_text, source_identifier = display_analysis_form()
+        
+        analyze_button = st.button(
+            "🔬 Analyze Article", 
+            use_container_width=True, 
+            disabled=not article_text,
+            type="primary"
+        )
+        
+        if analyze_button and article_text:
+            with st.spinner("🤖 AI is analyzing the article... This may take a moment."):
                 user_prompt = f"Please analyze the following news article:\n\n---\n\n{article_text}"
                 analysis = generate_ai_response(NEWS_ANALYSIS_PROMPT, user_prompt)
+                display_analysis_results(analysis, source_identifier)
+        elif not article_text:
+            st.info("💡 **Tip:** Enter a URL or paste article text above to start analysis")
 
-                st.markdown("---")
-                st.subheader("✨ Analysis Complete")
-                st.markdown(analysis)
-
-                # Save to history
-                add_to_history(st.session_state.username, "News Analysis", source_identifier, analysis)
-
-                # Add a copy button for the analysis
-                st.code(analysis, language="markdown")
-
-        elif not article_text and input_method == "Paste Text":
-             st.info("Please paste the article text above to be analyzed.")
-
-    with history_tab:
-        display_history()
+    with tab2:
+        display_modern_history()
